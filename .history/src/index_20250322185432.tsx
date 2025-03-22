@@ -1,8 +1,8 @@
 import { root } from '@lynx-js/react'
 
-import FirstImageCard from './FirstImageCard/index.jsx'
+import { App } from './App.js'
 
-root.render(<FirstImageCard />)
+root.render(<App />)
 
 if (import.meta.webpackHot) {
   import.meta.webpackHot.accept()
