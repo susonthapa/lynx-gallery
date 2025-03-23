@@ -1,11 +1,19 @@
-import type { NodesRef } from "@lynx-js/types";
+import type { NodesRef, ScrollEvent } from "@lynx-js/types";
 import LikeImageCard from "./Components/LikeImageCard.jsx";
 import type { Picture } from "./Pictures/furnitures/furnituresPictures.jsx";
 import { calculateEstimatedSize } from "./utils.js";
-import { useEffect, useRef } from "@lynx-js/react";
+import { useCallback, useEffect, useRef } from "@lynx-js/react";
+import type { NiceScrollbarRef } from "./Components/NiceScrollbar.jsx";
+import { NiceScrollbar } from "./Components/NiceScrollbar.jsx";
+
 export default function Gallery(props: {pictureData: Picture[]}) {
   const {pictureData} = props
   const galleryRef = useRef<NodesRef>(null)
+  const scrollbarRef = useRef<NiceScrollbarRef>(null)
+
+  const onScroll = useCallback((e: ScrollEvent) => {
+    scrollbarRef.current?.adjustScrollbar(e.detail.scrollTop, e.detail.scrollHeight)
+  }, [])
 
   useEffect(() => {
       galleryRef.current?.invoke({
@@ -20,7 +28,8 @@ export default function Gallery(props: {pictureData: Picture[]}) {
 
   return (
     <view className="gallery-wrapper">
-      <list ref={galleryRef} className="list" list-type="waterfall" column-count={2} scroll-orientation="vertical" custom-list-name="list-container">
+      <NiceScrollbar ref={scrollbarRef} />
+      <list ref={galleryRef} className="list" list-type="waterfall" column-count={2} scroll-orientation="vertical" custom-list-name="list-container" bindscroll={onScroll}>
         {pictureData.map((picture, index) => (
           <list-item estimated-main-axis-size-px={calculateEstimatedSize(picture.width, picture.height)} key={`${index}`} item-key={`${index}`}>
             <LikeImageCard picture={picture} />
