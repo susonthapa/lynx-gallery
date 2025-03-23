@@ -1,8 +1,9 @@
 import { root } from '@lynx-js/react'
 
-import FirstImageCard from './FirstImageCard/index.jsx'
+import Gallery from './Gallery.jsx'
+import { furnituresPictures } from './Pictures/furnitures/furnituresPictures.jsx'
 
-root.render(<FirstImageCard />)
+root.render(<Gallery pictureData={furnituresPictures} />)
 
 if (import.meta.webpackHot) {
   import.meta.webpackHot.accept()
