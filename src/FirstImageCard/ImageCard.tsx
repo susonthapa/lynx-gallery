@@ -1,4 +1,4 @@
-import "../index.css"
+import "../index.scss"
 import type { Picture } from "../Pictures/furnitures/furnituresPictures.jsx"
 
 export default function ImageCard(props: {picture: Picture}) {
